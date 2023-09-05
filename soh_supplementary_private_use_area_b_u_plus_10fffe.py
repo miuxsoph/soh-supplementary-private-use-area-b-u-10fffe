@@ -120,7 +120,7 @@ if __name__ == "__main__":
     if run_code:
         code = input("Enter code: ")
     else:
-        with open(input("Enter filepath: ")) as f:
+        with open(input("Enter filepath: "), encoding="utf-8") as f:
             code = f.read()
     print(soh_supplementary_private_use_area_b_u_plus_10fffe(code))
         
