@@ -4,7 +4,7 @@
 
 # Section 1: Imports and about
 
-from warnings import RuntimeWarning, warn
+import warnings
 import sys
 
 __about__ = {
@@ -33,13 +33,13 @@ def bin_list(text: str, encoding: str = "utf-8") -> list[int]:
 def bin_to_text(binary_list: list[int], encoding: str = "utf-8") -> str:
     """Takes a list of bits and converts it into a string using the specified encoding, defaulting to utf-8."""
     if len(binary_list) % 8:
-        warn(OutputBitBufferWarning("The output bit buffer is not a multiple of 8, so excess bits will be discarded."))
+        warnings.warn(OutputBitBufferWarning("The output bit buffer is not a multiple of 8, so excess bits will be discarded."))
     base_256 = []
     temp = []
     for bit in binary_list:
         temp.append(str(bit))
         if len(temp) == 8:
-            base_256.append(eval('0b' + (''.join(temp))))
+            base_256.append(int(''.join(temp), 2))
             temp = []
     try:
         return bytes(base_256).decode(encoding)
@@ -95,7 +95,7 @@ def soh_supplementary_private_use_area_b_u_plus_10fffe(code: str) -> str:
 class SOH10FFFE_error(RuntimeError):
     """Base exception for 􏿾 programs."""
 
-class SOH10FFFE_warning(RuntimeWarning):
+class SOH10FFFE_warning(SOH10FFFE_error):
     """Base warning for 􏿾 programs."""
 
 class OutputBitBufferWarning(SOH10FFFE_warning):
