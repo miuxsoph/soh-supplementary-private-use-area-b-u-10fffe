@@ -79,9 +79,17 @@ def soh_supplementary_private_use_area_b_u_plus_10fffe(code: str) -> str:
                 pointer %= tape_length
             case "-": # We invert the current bit
                 bit_tape[pointer] = (bit_tape[pointer] + 1) % 2
-            case "?": # We skip the next element if the current bit is 1.
+            case "?": # We skip the next element if the current bit is 1
                 if bit_tape[pointer]:
                     current_char += 1
+            case "A": # Binary AND
+                bit_tape[pointer] = +(bit_tape[(pointer-1) % tape_length] and bit_tape[(pointer-2) % tape_length])
+            case "O": # Binary OR
+                bit_tape[pointer] = +(bit_tape[(pointer-1) % tape_length] or bit_tape[(pointer-2) % tape_length])
+            case "N": # Binary NAND
+                bit_tape[pointer] = +(not (bit_tape[(pointer-1) % tape_length] and bit_tape[(pointer-2) % tape_length]))
+            case "X": # Binary XOR
+                bit_tape[pointer] = +((bit_tape[(pointer-1) % tape_length] or bit_tape[(pointer-2) % tape_length]) and not (bit_tape[(pointer-1) % tape_length] and bit_tape[(pointer-2) % tape_length]))
             case _: # We do nothing
                 pass
         current_char += 1
