@@ -92,9 +92,6 @@ def soh_supplementary_private_use_area_b_u_plus_10fffe(code: str) -> str:
                 bit_tape[pointer] = +((bit_tape[(pointer-1) % tape_length] or bit_tape[(pointer-2) % tape_length]) and not (bit_tape[(pointer-1) % tape_length] and bit_tape[(pointer-2) % tape_length]))
             case "|": # Go back to the beginning
                 current_char = -1
-            case ":": # Same as above but only if the current bit is 1.
-                if bit_tape[pointer] == 1:
-                    current_char = -1
             case _: # We do nothing
                 pass
         current_char += 1
